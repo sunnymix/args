@@ -1,2 +1,3 @@
-# args
-command line args parser
+# Args
+
+Command line args parser.
