@@ -20,11 +20,12 @@ public class Args {
     }
 
     private static Object parseOption(List<String> arguments, Parameter parameter) {
-        return getOptionParser(parameter.getType()).parse(arguments, parameter.getAnnotation(Option.class));
+        return getOptionParser(parameter.getType())
+            .parse(arguments, parameter.getAnnotation(Option.class));
     }
 
     static Map<Class<?>, OptionParser> PARSERS = Map.of(
-        boolean.class, new BoolOptionParser(),
+        boolean.class, new BooleanOptionParser(),
         int.class, new SingleValueOptionParser<>(Integer::parseInt),
         String.class, new SingleValueOptionParser<>(String::valueOf)
     );
@@ -32,5 +33,4 @@ public class Args {
     private static OptionParser getOptionParser(Class<?> parameterType) {
         return PARSERS.get(parameterType);
     }
-
 }
