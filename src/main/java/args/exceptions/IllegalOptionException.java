@@ -1,4 +1,4 @@
-package args;
+package args.exceptions;
 
 public class IllegalOptionException extends RuntimeException {
     private final String parameter;
