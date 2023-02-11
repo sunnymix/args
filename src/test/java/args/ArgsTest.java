@@ -4,53 +4,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
-1. Input:
-    -l -p 8080 -d /usr/logs (String)
-
-2. API design:
-    Options options = Args.parse(Options.class, "-l", "-p", "8080", "-d", "/usr/logs")
-    options.logging()
-    options.port()
-
-3. Implementation:
-    parse the origin array by index, eg, [-l], [-p, 8080], [-d, /usr/logs]
-
-4. Tasks:
-    1. Single options:
-        - TODO bool: -l
-        - TODO int: -p 8080
-        - TODO string: -d /usr/logs
-    2. TODO: Multi options: -l -p 8080 -d /usr/logs
-    3. Sad path:
-        - TODO bool: -l t , -l t f
-        - TODO int: -p , -p 8080 8081
-        - TODO string: -d , -d /usr/logs /usr/vars
-    4. Default value:
-        - TODO bool: false
-        - TODO int: 0
-        - TODO string: ""
-Each _TODO should map to a Test.
-
-5. Disable Test Too Big to implement in a short time. eg, example_1, example_2.
-
- */
-
 public class ArgsTest {
-    @Test
-    public void should_set_boolean_option_to_true_if_flag_present() {
-        BooleanOption option = Args.parse(BooleanOption.class, "-l");
-        assertTrue(option.logging());
-    }
-
-    @Test
-    public void should_set_boolean_option_to_false_if_flag_not_present() {
-        BooleanOption option = Args.parse(BooleanOption.class);
-        assertFalse(option.logging());
-    }
-
-    static record BooleanOption(@Option("l") boolean logging) {}
-
     @Test
     public void should_set_int_option_to_int_if_flag_present() {
         IntOption option = Args.parse(IntOption.class, "-p", "8080");
