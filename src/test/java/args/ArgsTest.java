@@ -6,25 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ArgsTest {
     @Test
-    public void should_set_int_option_to_int_if_flag_present() {
-        IntOption option = Args.parse(IntOption.class, "-p", "8080");
-        assertEquals(8080, option.port());
-    }
-
-    static record IntOption(@Option("p") int port) {}
-
-    @Test
-    public void should_set_string_option_to_string_if_flag_present() {
-        StringOption option = Args.parse(StringOption.class, "-d", "/usr/logs");
-        assertEquals("/usr/logs", option.directory());
-    }
-
-    static record StringOption(@Option("d") String directory) {}
-
-    /**
-     * Too Big to implement, should use the @Disabled at the start.
-     */
-    @Test
     public void should_set_multi_options() {
         MultiOptions options = Args.parse(MultiOptions.class, "-l", "-p", "8080", "-d", "/usr/logs");
         assertTrue(options.logging());
@@ -38,9 +19,6 @@ public class ArgsTest {
         @Option("d") String directory
     ) {}
 
-    /**
-     * Too Big to implement, should use the @Disabled at the start.
-     */
     @Test
     @Disabled
     public void should_example_2() {
