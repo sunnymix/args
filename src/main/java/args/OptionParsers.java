@@ -35,15 +35,14 @@ class OptionParsers {
     }
 
     private static Optional<List<String>> values(List<String> arguments, Option option, int expectedSize) {
-        int index = arguments.indexOf("-" + option.value());
-        if (index == -1) return Optional.empty();
+        return values(arguments, option)
+            .map(it -> checkSize(option, expectedSize, it));
+    }
 
-        List<String> values = values(arguments, index + 1);
-
+    private static List<String> checkSize(Option option, int expectedSize, List<String> values) {
         if (values.size() < expectedSize) throw new InsufficientArgumentsException(option.value());
         if (values.size() > expectedSize) throw new TooManyArgumentsException(option.value());
-
-        return Optional.of(values);
+        return values;
     }
 
     private static List<String> values(List<String> arguments, int valueIndex) {
