@@ -91,14 +91,15 @@ class OptionParsersTest {
         // TODO -g "this" "is" -> {"this", "is"}
         @Test
         public void should_parse_list_value() {
-            String[] value = OptionParsers.list(String[]::new, String::valueOf).parse(List.of("-g", "this", "is"), option("g"));
-            assertArrayEquals(new String[]{"this", "is"}, value);
+            assertArrayEquals(new String[]{"this", "is"},
+                OptionParsers.list(String[]::new, String::valueOf).parse(List.of("-g", "this", "is"), option("g")));
         }
 
         // TODO default value -> []
         @Test
         public void should_use_empty_array_as_default_value() {
-
+            assertArrayEquals(new String[]{},
+                OptionParsers.list(String[]::new, String::valueOf).parse(List.of(), option("g")));
         }
         // TODO -g -> throw exception
     }
