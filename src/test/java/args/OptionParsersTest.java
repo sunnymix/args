@@ -1,5 +1,6 @@
 package args;
 
+import args.exceptions.IllegalValueException;
 import args.exceptions.InsufficientArgumentsException;
 import args.exceptions.TooManyArgumentsException;
 import org.junit.jupiter.api.Nested;
@@ -101,7 +102,17 @@ class OptionParsersTest {
             assertArrayEquals(new String[]{},
                 OptionParsers.list(String[]::new, String::valueOf).parse(List.of(), option("g")));
         }
+
         // TODO -g -> throw exception
+        @Test
+        public void should_throw_exception_if_value_parser_cant_parse_value() {
+            Function<String, String> parser = (it) -> { throw new RuntimeException(); };
+            IllegalValueException e = assertThrows(IllegalValueException.class, () -> {
+                OptionParsers.list(String[]::new, parser).parse(List.of("-g", "this", "is"), option("g"));
+            });
+            assertEquals("g", e.getOption());
+            assertEquals("this", e.getValue());
+        }
     }
 
 }
