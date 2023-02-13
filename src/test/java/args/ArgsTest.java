@@ -1,7 +1,6 @@
 package args;
 
 import args.exceptions.IllegalOptionException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,15 +33,14 @@ public class ArgsTest {
     ) {}
 
     @Test
-    @Disabled
-    public void should_example_2() {
+    public void should_parse_list_options() {
        ListOptions options = Args.parse(ListOptions.class, "-g", "this", "is", "a", "list", "-d", "1", "2", "-3", "5");
        assertArrayEquals(new String[]{"this", "is", "a", "list"}, options.groups());
-       assertArrayEquals(new int[]{1, 2, -3, 5}, options.decimals());
+       assertArrayEquals(new Integer[]{1, 2, -3, 5}, options.decimals());
     }
 
     static record ListOptions(
         @Option("g") String[] groups,
-        @Option("d") int[] decimals
+        @Option("d") Integer[] decimals
     ) {}
 }

@@ -89,21 +89,18 @@ class OptionParsersTest {
 
     @Nested
     class ListOptionParser {
-        // TODO -g "this" "is" -> {"this", "is"}
         @Test
         public void should_parse_list_value() {
             assertArrayEquals(new String[]{"this", "is"},
                 OptionParsers.list(String[]::new, String::valueOf).parse(List.of("-g", "this", "is"), option("g")));
         }
 
-        // TODO default value -> []
         @Test
         public void should_use_empty_array_as_default_value() {
             assertArrayEquals(new String[]{},
                 OptionParsers.list(String[]::new, String::valueOf).parse(List.of(), option("g")));
         }
 
-        // TODO -g -> throw exception
         @Test
         public void should_throw_exception_if_value_parser_cant_parse_value() {
             Function<String, String> parser = (it) -> { throw new RuntimeException(); };
@@ -112,6 +109,12 @@ class OptionParsersTest {
             });
             assertEquals("g", e.getOption());
             assertEquals("this", e.getValue());
+        }
+
+        @Test
+        public void should_not_treat_negative_int_as_flag() {
+            assertArrayEquals(new Integer[]{-1, -2},
+                OptionParsers.list(Integer[]::new, Integer::parseInt).parse(List.of("-g", "-1", "-2"), option("g")));
         }
     }
 
