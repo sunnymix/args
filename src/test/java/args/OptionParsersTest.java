@@ -12,13 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import static args.OptionParsersTest.BooleanOptionParserTest.option;
+import static args.OptionParsersTest.BooleanOptionParser.option;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionParsersTest {
-
     @Nested
-    class BooleanOptionParserTest {
+    class BooleanOptionParser {
         @Test // Sad path
         public void should_not_accept_extra_argument_for_boolean_option() {
             TooManyArgumentsException e = assertThrows(TooManyArgumentsException.class, () -> {
@@ -53,7 +52,7 @@ class OptionParsersTest {
     }
 
     @Nested
-    class UnaryOptionParserTest {
+    class UnaryOptionParser {
         @Test // Sad path
         public void should_not_accept_extra_argument_for_single_value_option() {
             TooManyArgumentsException e = assertThrows(TooManyArgumentsException.class, () -> {
@@ -86,4 +85,22 @@ class OptionParsersTest {
             assertSame(parsedValue, OptionParsers.unary(whatever, parse).parse(List.of("-p", "8080"), option("p")));
         }
     }
+
+    @Nested
+    class ListOptionParser {
+        // TODO -g "this" "is" -> {"this", "is"}
+        @Test
+        public void should_parse_list_value() {
+            String[] value = OptionParsers.list(String[]::new, String::valueOf).parse(List.of("-g", "this", "is"), option("g"));
+            assertArrayEquals(new String[]{"this", "is"}, value);
+        }
+
+        // TODO default value -> []
+        @Test
+        public void should_use_empty_array_as_default_value() {
+
+        }
+        // TODO -g -> throw exception
+    }
+
 }
